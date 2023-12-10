@@ -1,0 +1,1 @@
+<script type = 'mudule' , src = 'lib.mjs'></script>
