@@ -1,7 +1,15 @@
-const string = 'hello world';
-const string2 = 'lllll';
-const search = 'l';
-const regexp = new RegExp(search, 'g');
-console.log(regexp);
-console.log(typeof regexp);
-console.log(typeof '/l/g');
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+
+  sayHi() {
+    console.log(`hi i am ${this.name}`);
+  }
+}
+
+class Korean extends Person {}
+
+let leedongdong = new Korean('leedongdong');
+
+leedongdong.sayHi();
