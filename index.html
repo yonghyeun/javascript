@@ -4,7 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="script.js"></script>
+    <style>
+      * {
+        padding: 10px;
+      }
+      .Parent div {
+        border: 1px solid black;
+      }
+      .Parent div {
+        border: 1px solid hotpink;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <div class="Parent">
+      <div class="Child1">1번자식</div>
+      <div id="Child2">
+        2번자식 (parentNode)
+        <div>1번 손자 (previousElementSibling)</div>
+        <div id="pick">2번 손자 (선택된 노드)</div>
+        <div>3번 손자 (nextElementSibling)</div>
+      </div>
+      <div class="Child3">3번자식</div>
+    </div>
+    <script>
+      const $picknode = document.getElementById('Child2');
+      const parentnode = $picknode.parentNode;
+      console.log(parentnode.children);
+    </script>
+  </body>
 </html>
