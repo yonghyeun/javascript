@@ -1,0 +1,15 @@
+.box {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.red {
+  background-color: red;
+}
+.blue {
+  background-color: blue;
+}

@@ -6,31 +6,69 @@
     <title>Document</title>
     <style>
       * {
-        padding: 10px;
+        margin: 0px;
       }
-      .Parent div {
-        border: 1px solid black;
-      }
-      .Parent div {
-        border: 1px solid hotpink;
+      .dragBox {
+        background-color: rgba(255, 105, 180, 0.5);
+        display: flex;
+        position: absolute;
+        justify-content: center;
+        align-items: center;
+        color: white;
       }
     </style>
   </head>
   <body>
-    <div class="Parent">
-      <div class="Child1">1번자식</div>
-      <div id="Child2">
-        2번자식 (parentNode)
-        <div>1번 손자 (previousElementSibling)</div>
-        <div id="pick">2번 손자 (선택된 노드)</div>
-        <div>3번 손자 (nextElementSibling)</div>
-      </div>
-      <div class="Child3">3번자식</div>
-    </div>
     <script>
-      const $picknode = document.getElementById('Child2');
-      const parentnode = $picknode.parentNode;
-      console.log(parentnode.children);
+      let isDragging = true;
+      let startX, startY, endX, endY;
+
+      // 커서 이동에 따라 생성된 box 태그의 너비, 높이, 시작점을 변경하는 함수 생성
+
+      const boxHandler = (event) => {
+        const boxes = document.querySelectorAll('.dragBox');
+        const $box = boxes[boxes.length - 1];
+        if (isDragging) {
+          const endX = event.clientX;
+          const endY = event.clientY;
+          const width = Math.abs(endX - startX);
+          const height = Math.abs(endY - startY);
+
+          $box.style.width = `${width}px`;
+          $box.style.height = `${height}px`;
+          $box.style.left = `${Math.min(startX, endX)}px`;
+          $box.style.top = `${Math.min(startY, endY)}px`;
+
+          const area = Math.round(width * height);
+
+          // 박스의 면적 표기하기
+          $box.textContent = `${area}px`;
+          // 면적 글자 크기 변경하기
+          $box.style.fontSize = `${Math.min(width, height) * 0.15}px`;
+        }
+      };
+
+      // 마우스가 눌렸을 때 box 태그를 생성하는 이벤트 핸들러
+
+      document.addEventListener('mousedown', (event) => {
+        isDragging = true;
+        // 마우스가 눌렸을 때 시작 위치를 지정해주기
+        startX = event.clientX;
+        startY = event.clientY;
+
+        // 마우스가 눌렸을 때 box 태그를 body에 추가
+        const $box = document.createElement('p');
+        $box.classList.add('dragBox');
+        document.body.appendChild($box);
+
+        document.addEventListener('mousemove', boxHandler);
+      });
+
+      // 마우스를 놓았을 때 box 태그의 변화를 그만 만드는 이벤트 핸들러
+      // 새로운 box 를 만들기 위함
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+      });
     </script>
   </body>
 </html>
