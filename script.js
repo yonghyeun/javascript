@@ -1,6 +1,1 @@
-function isOddes(arr) {
-  arr.forEach((num) => {
-    if (num % 2) return true;
-    return false;
-  });
-}
+console.log(2 ** 128);

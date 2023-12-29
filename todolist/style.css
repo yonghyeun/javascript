@@ -1,0 +1,112 @@
+* {
+  font-family: 'kakao';
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #153677, #4e085f);
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.to-do-list {
+  width: 100%;
+  max-width: 800px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 30px;
+  margin-top: 100px;
+  overflow-y: hidden;
+  box-shadow: 0px 0px 30px 10px #888888;
+}
+
+.header {
+  display: block;
+  padding: 20px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.input-goal {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  width: 40%;
+  height: 30px;
+  margin-right: 10px;
+  border-radius: 30px;
+  background-color: #eee;
+  border: 0px;
+  text-align: center;
+  font-size: 20px;
+  transition: box-shadow 0.3s ease, width 0.5s ease;
+}
+
+input:focus {
+  outline: none;
+  width: 70%;
+  box-shadow: 5px 5px 10px 0px #888888;
+}
+input:hover {
+  box-shadow: 5px 5px 10px 0px #888888;
+}
+
+#text-submit {
+  border-radius: 30px;
+  background-color: #68f2af;
+  border: 0px;
+}
+
+#text-submit:hover {
+  box-shadow: 5px 5px 10px 0px #888888;
+  transition: box-shadow 0.3s ease;
+}
+
+#content {
+  background-color: #68f2af;
+  width: 95%;
+  height: 75%;
+  margin: 30px auto;
+  padding-top: 20px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 10px 5px whitesmoke;
+}
+
+.inner-wrapper {
+  width: 90%;
+  background-color: #eee;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 30px;
+  padding: 10px;
+  font-size: 30px;
+  margin: 0 auto;
+}
+
+.typed-goal {
+  display: flex;
+}
+
+.button-wrapper > button {
+  background-color: #68f2af;
+  border-radius: 30px;
+  border: 0px;
+  height: 70%;
+  margin-right: 5px;
+}
+
+.button-wrapper > button:hover {
+  box-shadow: 5px 5px 10px 0px grey;
+  transition: box-shadow 0.3s ease;
+}
