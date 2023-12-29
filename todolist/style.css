@@ -66,6 +66,7 @@ input:hover {
   border-radius: 30px;
   background-color: #68f2af;
   border: 0px;
+  transition: box-shadow 0.4s ease;
 }
 
 #text-submit:hover {
@@ -85,13 +86,14 @@ input:hover {
 
 .inner-wrapper {
   width: 90%;
-  background-color: #eee;
+  background-color: #ab5edb;
+  color: white;
   display: flex;
   justify-content: space-between;
   border-radius: 30px;
   padding: 10px;
   font-size: 30px;
-  margin: 0 auto;
+  margin: 10px auto;
 }
 
 .typed-goal {
