@@ -9,7 +9,15 @@
   <body>
     <div class="container">
       <div class="to-do-list">
-        <span class="header">To Do List 📅</span>
+        <div id="header">
+          <span>To Do List 📅</span>
+          <div id="progress">
+            <div id="progress-total">
+              <div id="progress-bar"></div>
+            </div>
+            <span id="progress-text"></span>
+          </div>
+        </div>
         <div class="input-goal">
           <input type="text" id="input" />
           <button id="text-submit">✔️</button>
