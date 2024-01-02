@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header></header>
+    <section></section>
+  </body>
+  <script>
+    const requestURL =
+      'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+    const request = new XMLHttpRequest();
+    const $section = document.querySelector('section');
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+
+    request.addEventListener('load', () => {
+      const superHeroes = request.response;
+      console.log(superHeroes);
+
+      populateHeader(superHeroes);
+      showHeroes(superHeroes);
+    });
+  </script>
+</html>
