@@ -3,28 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
     <link rel="stylesheet" href="style.css" />
+    <title>Divs 3-Way Split</title>
   </head>
   <body>
-    <header></header>
-    <section></section>
+    <div class="pizza-container">
+      <div class="slice" id="slice1"></div>
+      <div class="slice" id="slice2"></div>
+      <div class="slice" id="slice3"></div>
+    </div>
   </body>
-  <script>
-    const requestURL =
-      'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
-    const request = new XMLHttpRequest();
-    const $section = document.querySelector('section');
-    request.open('GET', requestURL);
-    request.responseType = 'json';
-    request.send();
-
-    request.addEventListener('load', () => {
-      const superHeroes = request.response;
-      console.log(superHeroes);
-
-      populateHeader(superHeroes);
-      showHeroes(superHeroes);
-    });
-  </script>
 </html>

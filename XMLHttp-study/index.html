@@ -4,12 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
+    <style>
+      .outter {
+        background-color: #eee;
+        box-sizing: content-box;
+      }
+      .inner {
+        margin: 200px 200px;
+        width: 200px;
+        height: 200px;
+        background-color: pink;
+        box-sizing: content-box;
+      }
+    </style>
   </head>
   <body>
-    <button>request</button>
-    <header></header>
-    <section></section>
+    <div class="outter">
+      <div class="inner"></div>
+    </div>
   </body>
-  <script src="request.js"></script>
 </html>

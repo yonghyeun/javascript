@@ -14,9 +14,16 @@ const sendRequest = () => {
 };
 
 // 버튼이 눌리면 JSON 파일이 있는 URL에 GET 요청을 보내 JSON 파일을 가져옴
+
 $button.addEventListener('click', () => {
-  if (request.status === 200) return;
+  if (request.readyState !== 0) return;
   sendRequest();
+});
+
+// 요청이 완료되면 파싱해온 객체를 로그하자
+
+request.addEventListener('load', () => {
+  console.log(request.response);
 });
 
 // 기존 html 에 존재하는 header 태그 가져오기

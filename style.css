@@ -1,39 +1,37 @@
 body {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100vh;
   margin: 0;
 }
 
-.grape-cluster {
+.pizza-container {
   position: relative;
-}
-
-.grape {
-  width: 20px;
-  height: 40px;
-  background-color: purple;
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
+  overflow: hidden;
+}
+
+.slice {
   position: absolute;
+  width: 0;
+  height: 0;
+  clip-path: polygon(50% 50%, 100% 0, 0 0);
 }
 
-.grape:nth-child(1) {
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+#slice1 {
+  background-color: #ff6347; /* Tomato */
+  transform: rotate(0deg);
 }
 
-.grape:nth-child(2) {
-  top: 30px;
-  left: 30%;
-  transform: translateX(-50%);
+#slice2 {
+  background-color: #32cd32; /* Lime Green */
+  transform: rotate(120deg);
 }
 
-.grape:nth-child(3) {
-  top: 30px;
-  left: 70%;
-  transform: translateX(-50%);
+#slice3 {
+  background-color: #4169e1; /* Royal Blue */
+  transform: rotate(240deg);
 }
-
-/* Add more styles for additional grape elements */
