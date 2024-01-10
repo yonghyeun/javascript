@@ -1,0 +1,50 @@
+body {
+  background: linear-gradient(45deg, red, black);
+}
+
+#content {
+  border: 1px solid black;
+  max-width: 800px;
+  margin: 10vh auto;
+  background-color: white;
+}
+
+#button-wrapper {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  width: 80%;
+  height: 80%;
+  margin: 0 auto;
+  padding: 40px;
+  border: 2px solid green;
+  border-radius: 40%;
+}
+
+.userid-button {
+  border: 0px;
+  border-radius: 40%;
+  width: 50px;
+  height: 50px;
+}
+
+#header div {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+#main-content {
+  border: 1px solid purple;
+  margin: auto;
+  height: 400px;
+  overflow-y: scroll;
+  transition: all 1s;
+}
+
+.list {
+  margin: 10px;
+  font-size: 20px;
+  border-radius: 20px;
+  text-align: center;
+}
