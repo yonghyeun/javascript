@@ -1,8 +1,12 @@
-const obj = {
-  name: 'lee',
-  age: 16,
-};
+class Person {
+  constructor(name) {
+    this._name = name; // 다른 이름으로 저장
+  }
 
-const obj2 = ({ name, age } = obj);
+  get name() {
+    return this._name;
+  }
+}
 
-console.log(obj2);
+const tom = new Person('tom');
+console.log(tom.name);

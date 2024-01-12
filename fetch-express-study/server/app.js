@@ -55,9 +55,9 @@ app.post('/api/todo', (req, res) => {
   // 받은 text , done 을 todolist 객체에 저장
 
   if (!text || text.trim() === '') return res.send('텍스트를 넣어주세요');
-
+  id += 1;
   todolist.push({
-    id: id++,
+    id,
     text,
     done,
   });
