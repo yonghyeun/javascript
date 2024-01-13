@@ -1,12 +1,18 @@
-class Person {
-  constructor(name) {
-    this._name = name; // 다른 이름으로 저장
-  }
+const fibo = (() => {
+  let [pre, cur] = [0, 1];
+  return {
+    [Symbol.iterator]() {
+      return this;
+    },
 
-  get name() {
-    return this._name;
-  }
+    next() {
+      [pre, cur] = [cur, pre + cur];
+      return { value: cur, done: false };
+    },
+  };
+})();
+
+for (const num of fibo) {
+  if (num > 100) break;
+  console.log(num);
 }
-
-const tom = new Person('tom');
-console.log(tom.name);
