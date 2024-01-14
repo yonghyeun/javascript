@@ -3,14 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body></body>
-  <script>
-    class Example {
-      async constructor() {}
-    }
+    <style>
+      .point-container {
+        position: relative;
+      }
 
-    const ex = new Example()
-  </script>
+      .point {
+        width: 10px;
+        height: 10px;
+        background-color: #3498db;
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      .point-1 {
+        top: 50px;
+        left: 50px;
+      }
+
+      .point-2 {
+        top: 150px;
+        left: 150px;
+      }
+
+      .line {
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background-color: #3498db;
+        transform-origin: 50% 0;
+        transform: translateX(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="point-container">
+      <div class="point point-1"></div>
+      <div class="point point-2"></div>
+      <div class="line"></div>
+    </div>
+  </body>
 </html>

@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+html,
+body {
+  font-family: 'Pacifico', cursive;
+  margin: 0 auto;
+  background-color: #aaa;
+}
+
+p {
+  padding: 1rem 0;
+  margin: 0;
+  font-size: 2vw;
+  position: absolute;
+  white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+.container {
+  margin: 0 auto;
+  width: 80vw;
+  height: 300vh;
+  margin-bottom: 10rem;
+  background-color: black;
+  position: relative;
+  /* overflow-x: hidden; */
+}
+
+.first-banner {
+  top: 50vh;
+  background-color: #ff3796;
+  rotate: 2deg;
+}
+
+.second-banner {
+  top: 55vh;
+  background-color: #5800ff;
+  rotate: -2deg;
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+}

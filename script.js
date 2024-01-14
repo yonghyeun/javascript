@@ -1,18 +1,9 @@
-const fibo = (() => {
-  let [pre, cur] = [0, 1];
-  return {
-    [Symbol.iterator]() {
-      return this;
-    },
+const tom = {
+  name: 'tom',
+  // info: {
+  //   age: 16,
+  //   address: 'korea',
+  // },
+};
 
-    next() {
-      [pre, cur] = [cur, pre + cur];
-      return { value: cur, done: false };
-    },
-  };
-})();
-
-for (const num of fibo) {
-  if (num > 100) break;
-  console.log(num);
-}
+console.log(tom.info??.age);
