@@ -3,44 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
     <style>
-      .point-container {
+      p {
+        display: inline-block;
+        width: 100px;
+        margin: 200px 200px;
+        background-color: green;
         position: relative;
       }
 
-      .point {
-        width: 10px;
-        height: 10px;
-        background-color: #3498db;
-        border-radius: 50%;
+      p::before {
+        content: attr(
+          data-text
+        ); /* data-text 속성의 값으로 content 속성 지정 */
+        background-color: red;
         position: absolute;
-      }
-
-      .point-1 {
-        top: 50px;
-        left: 50px;
-      }
-
-      .point-2 {
-        top: 150px;
-        left: 150px;
-      }
-
-      .line {
-        position: absolute;
-        width: 1px;
-        height: 100%;
-        background-color: #3498db;
-        transform-origin: 50% 0;
-        transform: translateX(-50%);
+        z-index: 0;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
       }
     </style>
   </head>
   <body>
-    <div class="point-container">
-      <div class="point point-1"></div>
-      <div class="point point-2"></div>
-      <div class="line"></div>
-    </div>
+    <p data-text="안녕하세요">안녕하세요</p>
   </body>
 </html>

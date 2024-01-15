@@ -20,7 +20,7 @@ class BannerTag {
   setDirection(direction) {
     if (direction === -1) {
       // 배너의 이동 방향이 반대라면 해당 배너를 좌측으로 옮겨줘야 한다.
-      this.tag.style.left = '-100%';
+      this.tag.style.left = '-110%';
     }
     this.direction = direction;
     return this;
@@ -32,8 +32,7 @@ class BannerTag {
   }
 
   marqueeText() {
-    const MARGIN = 2000;
-    const isScrollHalf = this.count + MARGIN > this.tag.scrollWidth / 2;
+    const isScrollHalf = this.count > this.tag.scrollWidth / 2;
 
     if (isScrollHalf) {
       this.count = 0;
@@ -46,6 +45,7 @@ class BannerTag {
 
   animate() {
     this.count += 1;
+
     this.count = this.marqueeText();
 
     requestAnimationFrame(this.animate.bind(this));
