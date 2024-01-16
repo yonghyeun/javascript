@@ -45,11 +45,16 @@ class FlipCard {
 }
 
 const $sticky = document.querySelector('.sticky-content');
-const flip = new FlipCard($sticky);
-flip.init();
-console.log(flip);
+const flipCard = new FlipCard($sticky);
+flipCard.init();
 
 window.addEventListener('scroll', () => {
-  flip.move(window.scrollY);
-  flip.rotate(window.scrollY);
+  console.log(window.scrollY);
+
+  flipCard.move(window.scrollY);
+  flipCard.rotate(window.scrollY);
+});
+
+window.addEventListener('resize', () => {
+  flipCard.init();
 });

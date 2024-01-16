@@ -1,45 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap');
+
+* {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   padding: 0px;
   margin: 0px;
+  font-family: 'Hahmlet', serif;
+  background-color: #1e3a4075;
 }
-/* 
-div {
-  box-sizing: border-box;
-} */
 
 .main-content {
   margin: 0 auto;
   width: 90vh;
   height: 100vh;
-  background-color: #aaa;
+  background-color: #1e3a40;
 }
 
 .sticky-section {
   width: 90vh;
-  height: 600vh;
+  height: 300vh;
 }
 
 .before-content,
 .after-content {
   width: 90vh;
   height: 100vh;
-  background-color: #eee;
+  background-color: #a6855d;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 100px;
+  color: white;
+  font-weight: 700;
+}
+
+.after-content {
+  align-items: flex-start;
 }
 
 .sticky-content {
   position: sticky;
   top: 0px;
-  background-color: #bbb;
+  background-color: #a6855d;
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
 }
 
 .card-wrapper {
@@ -73,16 +84,18 @@ div {
   justify-content: center;
   align-items: center;
   position: absolute;
-  font-size: 5rem;
 }
 
 /* 기본적으로 카드들을 뒤집은 채로 차곡차곡 샇아야 함 */
 
 .front {
-  background-color: #aaa;
+  background-color: #1e3a40;
   transform: rotateY(180deg);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .back {
-  background-color: black;
+  background-color: #a64833;
 }
