@@ -1,0 +1,88 @@
+html,
+body {
+  padding: 0px;
+  margin: 0px;
+}
+/* 
+div {
+  box-sizing: border-box;
+} */
+
+.main-content {
+  margin: 0 auto;
+  width: 90vh;
+  height: 100vh;
+  background-color: #aaa;
+}
+
+.sticky-section {
+  width: 90vh;
+  height: 600vh;
+}
+
+.before-content,
+.after-content {
+  width: 90vh;
+  height: 100vh;
+  background-color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+}
+
+.sticky-content {
+  position: sticky;
+  top: 0px;
+  background-color: #bbb;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 20vw;
+  display: flex;
+  transform: translateX(100%);
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card {
+  width: 24%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform: perspective(100vw);
+}
+
+.front,
+.back {
+  width: 100%;
+  height: 100%;
+  border-radius: 1vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  font-size: 5rem;
+}
+
+/* 기본적으로 카드들을 뒤집은 채로 차곡차곡 샇아야 함 */
+
+.front {
+  background-color: #aaa;
+  transform: rotateY(180deg);
+}
+
+.back {
+  background-color: black;
+}
