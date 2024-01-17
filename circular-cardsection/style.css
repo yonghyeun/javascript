@@ -3,6 +3,7 @@
 * {
   font-family: 'Hahmlet', serif;
   font-weight: 900;
+  user-select: none;
 }
 
 body {
@@ -15,7 +16,8 @@ body {
   align-items: flex-start;
   padding-top: 200px;
   position: relative;
-  margin: 0 auto;
+  margin: 0px auto;
+  height: 800px;
 }
 
 .card {
@@ -30,12 +32,6 @@ body {
   align-items: center;
   border-radius: 10%;
   transition: transform 1s;
-}
-
-button {
-  margin: auto auto;
-  width: 100px;
-  height: 100px;
 }
 
 #first-card {
