@@ -1,9 +1,3 @@
-const tom = {
-  name: 'tom',
-  // info: {
-  //   age: 16,
-  //   address: 'korea',
-  // },
-};
+const a = 99;
 
-console.log(tom.info??.age);
+console.log(a.home);
