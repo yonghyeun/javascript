@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&display=swap');
+
+* {
+  font-family: 'Hahmlet', serif;
+  font-weight: 900;
+  user-select: none;
+}
+
+body {
+  /* background: linear-gradient(to bottom, #12adfd, #1069f3); */
+  background-color: black;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 200px;
+  position: relative;
+  margin: 0px auto;
+  height: 800px;
+}
+
+.card {
+  width: 200px;
+  height: 400px;
+  background-color: #0b4f9d;
+  position: absolute;
+  color: white;
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10%;
+  transition: transform 1s;
+  box-shadow: 0px 0px 30px 5px white;
+  transform: translateX(0px) translateY(150px) scale(2);
+  padding: 1%;
+}
+
+.weather-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #0b4f9d;
+
+  border-radius: 10%;
+}
+
+.main-weather {
+  width: 100%;
+  height: 80%;
+  border-radius: 10%;
+  background: linear-gradient(to bottom, #12adfd, #1069f3);
+  box-shadow: 1px 0px 5px 1px black;
+}
+
+.sub-weather {
+  width: 100%;
+  height: 20%;
+}
+
+.header-weather {
+  text-align: center;
+  font-size: 15px;
+}
+
+.body-weather {
+  position: relative;
+  height: 100%;
+}
+
+.weather-img {
+  width: 80%;
+  position: absolute;
+  left: 10%;
+  display: block;
+}
+
+.weather-text {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 130px;
+}
+
+.temperature-text {
+  font-weight: bold;
+}
+
+.state-text {
+  font-size: 24px;
+}
+
+.date-text {
+  font-size: 8px;
+}
+
+.cross-line {
+  position: absolute;
+  bottom: 18%;
+  left: 10%;
+  width: 80%;
+  border: none;
+  height: 1px;
+  box-shadow: 0 1px 0.1px rgba(255, 255, 255, 0.5);
+}
+
+.weather-sub {
+  position: absolute;
+  bottom: 30px;
+  width: 80%;
+  left: 10%;
+  display: flex;
+  justify-content: space-around;
+  font-size: 7px;
+  text-align: center;
+}
+
+.sub-weather {
+  background-color: #0b4f9d;
+  border-radius: 10%;
+  position: relative;
+}
+
+.weather-by-time {
+  font-size: 8px;
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+  transition: transfrom 1s;
+  overflow-x: hidden;
+}
+
+.item-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.time-wrapper {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.small-weather-img {
+  width: 40px;
+}
+
+.small-time-text {
+  text-align: center;
+}
+
+.small-temperature {
+  text-align: center;
+  font-size: 8px;
+}
