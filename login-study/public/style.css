@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@300&family=Noto+Sans+KR&display=swap');
+
+* {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0px;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: url(background.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+::selection {
+  background-color: transparent;
+  color: inherit;
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 30vw;
+  margin: 0 auto;
+  padding: 5vw 5vh;
+  background-color: transparent;
+  box-shadow: 0px 0px 5px 5px rgba(225, 225, 255, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  color: white;
+  position: relative;
+  font-weight: 900;
+  transition: all 1s ease-in-out;
+}
+
+.wrong {
+  backdrop-filter: blur(20px) contrast(200%);
+  animation: horiznotalMove 0.1s 5 alternate;
+}
+
+@keyframes horiznotalMove {
+  from {
+    left: -10px;
+  }
+  to {
+    left: 10px;
+  }
+}
+
+.login-form {
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+label {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+a {
+  color: skyblue;
+  text-decoration: none;
+}
+
+#email,
+#password {
+  width: 100%;
+  height: 40px;
+  margin: 3% 0;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 20px;
+  transition: all 0.5s ease;
+}
+
+#email:focus,
+#password:focus {
+  height: 50px;
+}
+
+#remember {
+  margin-right: 1%;
+}
+
+.custom-checkbox {
+  display: flex;
+}
+
+#login-button {
+  background-color: skyblue;
+  border: none;
+  color: white;
+  font-size: 24px;
+  width: 100%;
+  height: 80px;
+  border-radius: 20px;
+  border: none;
+  margin-top: 15px;
+}
+
+.footer-text {
+  padding: 30px;
+  text-align: center;
+}
+
+@media screen and (max-width: 425px) {
+  .container {
+    width: 110vw;
+    height: 100vh;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    position: relative;
+    padding-top: 40%;
+    margin: 0px;
+  }
+}
+
+.error {
+  text-align: center;
+  font-size: 20px;
+  color: red;
+  opacity: 1;
+  transition: all 0.2s ease;
+}
+
+.hidden {
+  opacity: 0;
+}
