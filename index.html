@@ -4,41 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <style>
-      button {
-        width: 100px;
-        height: 100px;
-      }
-      pre {
-        font-size: 40px;
-      }
-    </style>
   </head>
   <body>
-    <button>click!</button>
-    <pre>0</pre>
+    <form
+      action="www.example.com/form"
+      ,
+      method="POST"
+      ,
+      enctype="multipart/form-data"
+    >
+      <p>what is your naem ? <input type="text" name="submit-name" /></p>
+      <p>
+        what files are you sending ? <input type="file" name="submit-file" />
+      </p>
+      <input type="submit" value="Send" /><input type="reset" />
+    </form>
   </body>
-  <script>
-    const $button = document.querySelector('button');
-    const $pre = document.querySelector('pre');
-    let count = 0;
-
-    const debounce = (callback, ms) => {
-      let timer;
-
-      return (...args) => {
-        if (timer) return;
-        timer = setTimeout(() => {
-          callback(args);
-          timer = null;
-        }, ms);
-      };
-    };
-
-    const changePre = () => {
-      $pre.textContent = ++count;
-    };
-
-    $button.addEventListener('click', debounce(changePre, 300));
-  </script>
 </html>
