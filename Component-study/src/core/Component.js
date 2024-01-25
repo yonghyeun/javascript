@@ -1,10 +1,12 @@
 export default class Component {
   $target;
   $state;
+  $props;
 
-  constructor($target, $state) {
+  constructor($target, $state, $props) {
     this.$target = $target;
     this.$state = $state;
+    this.$props = $props; // + 추가 , props를 이용해 하위 컴포넌트에 정보 전달
     this.setup();
     this.render();
     this.setEvent();
@@ -16,8 +18,11 @@ export default class Component {
 
   setup() {}
 
+  mounted() {}
+
   render() {
     this.$target.innerHTML = this.templet();
+    this.mounted(); // 렌더링 된 이후 실행되는 메소드
   }
 
   setState(newState) {
