@@ -1,4 +1,4 @@
-import Component from '../core/Component';
+import Component from '../core/Component.js';
 
 export default class ItemAppender extends Component {
   templet() {

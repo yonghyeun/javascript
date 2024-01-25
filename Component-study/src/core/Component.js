@@ -1,11 +1,9 @@
 export default class Component {
   $target;
-  $state;
   $props;
 
-  constructor($target, $state, $props) {
+  constructor($target, $props) {
     this.$target = $target;
-    this.$state = $state;
     this.$props = $props; // + 추가 , props를 이용해 하위 컴포넌트에 정보 전달
     this.setup();
     this.render();

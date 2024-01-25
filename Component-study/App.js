@@ -4,6 +4,24 @@ import ItemFilter from './src/components/ItemFilter.js';
 import Itemappender from './src/components/Itemappender.js';
 
 export default class App extends Component {
+  setup() {
+    this.state = {
+      isFilter: 0,
+      items: [
+        {
+          seq: 1,
+          content: 'item1',
+          active: true,
+        },
+        {
+          seq: 2,
+          content: 'item2',
+          active: false,
+        },
+      ],
+    };
+  }
+
   templet() {
     // 다양한 컴포넌트들이 구성할 기본 레이웃만 가지고 있음
     this.$target.innerHTML = `
