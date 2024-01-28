@@ -16,3 +16,5 @@ function Casino() {
 
 const myCasino = new Casino();
 myCasino.rollDice();
+
+const randomText = Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga iste doloremque ab molestiae molestias aliquam, maxime, facilis possimus voluptas, nobis corrupti dolore corporis quisquam. Maiores iure ipsam hic ullam nobis.
