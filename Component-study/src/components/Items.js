@@ -2,24 +2,26 @@ import Component from '../core/Component.js';
 
 export default class Items extends Component {
   templet() {
-    const { items } = this;
+    const { filteredItems } = this.$props;
 
-    this.$target.innerHTML = `
+    return `
     <ul>
-    ${items.map(
-      ({ seq, content, active }) => `<li data-seq = "${seq}">${content}</li>
-      <button class = 'toggleBtn' style = 'color : ${
-        active ? 'red' : 'blue'
-      }'>${
-        active ? '활성화' : '비활성화'
-      }</button><button class = 'deleteBtn'>삭제</button>`,
+    ${filteredItems.map(
+      ({ seq, content, active }) =>
+        `<li data-seq = "${seq}">${content}<button class = 'toggleBtn' style = 'color : ${
+          active ? 'red' : 'blue'
+        }'>${
+          active ? '활성화' : '비활성화'
+        }</button><button class = 'deleteBtn'>삭제</button></li>`,
     )}
-    </ul>
-    `;
+    </ul>`;
   }
 
   setEvent() {
     const { deleteItem, toggleItem } = this.$props;
+    const $button = document.querySelector('.deleteBtn');
+    console.log($button.closest('[data-seq]'));
+    console.log(document.querySelector('[data-seq]'));
 
     this.addEvent('click', '.deleteBtn', ({ target }) => {
       const targetSeq = Number(target.closest('[data-seq]').dataset.seq);

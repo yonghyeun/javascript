@@ -5,19 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body>
-    <form
-      action="www.example.com/form"
-      ,
-      method="POST"
-      ,
-      enctype="multipart/form-data"
-    >
-      <p>what is your naem ? <input type="text" name="submit-name" /></p>
-      <p>
-        what files are you sending ? <input type="file" name="submit-file" />
-      </p>
-      <input type="submit" value="Send" /><input type="reset" />
-    </form>
-  </body>
+  <body></body>
+  <script>
+    const tom = { firstName: 'tom' };
+    function introduce() {
+      console.log(`hi i am ${this.firstName}`);
+    }
+    const bindedIntroduce = introduce.bind(tom);
+    console.dir(bindedIntroduce);
+  </script>
 </html>

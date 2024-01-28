@@ -45,6 +45,7 @@ export default class App extends Component {
 
       this.setState({ items });
     };
+
     const deleteFunc = ({ target }) => {
       const { items } = this.state;
       const targetSeq = target.closest('[data-seq]').dataset.seq;

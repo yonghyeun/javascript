@@ -3,12 +3,13 @@
 Component-study
 ├─ .vscode
 │  └─ settings.json
+├─ App.js
 ├─ index.html
 ├─ main.js
+├─ README.md
 └─ src
    ├─ components
-   │  ├─ app.js
-   │  ├─ Itemappender.js
+   │  ├─ ItemAppender.js
    │  ├─ ItemFilter.js
    │  └─ Items.js
    └─ core
