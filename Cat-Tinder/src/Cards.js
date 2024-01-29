@@ -1,5 +1,4 @@
 import APIdeque from './APIdeque.js';
-
 export default class Cards {
   constructor() {
     this.wrapper = document.querySelector('.card-wrapper');
@@ -44,6 +43,13 @@ export default class Cards {
     current.style.transform = `translate3D(${offset.X * 5}px , ${
       offset.Y * 5
     }px , 0px)`;
+
+    /* 카드가 선택되면 카드를 더 가져와야 하는지 확인 */
+    this.count -= 1;
+    if (this.count < 5) {
+      this.deque.fetchImg();
+      this.count += 5;
+    }
 
     setTimeout(() => {
       this.wrapper.removeChild(current);
@@ -101,5 +107,8 @@ export default class Cards {
     this.current.addEventListener('pointerdown', setupCard);
   }
 
-  mounted() {}
+  mounted() {
+    this.deque = new APIdeque();
+    this.count = 6; /* fetch 로 가져온 이미지 개수 */
+  }
 }
