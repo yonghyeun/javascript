@@ -1,3 +1,5 @@
+import APIdeque from './APIdeque.js';
+
 export default class Cards {
   constructor() {
     this.wrapper = document.querySelector('.card-wrapper');

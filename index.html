@@ -26,14 +26,7 @@
     export default class APIdeque extends deque {
       constructor() {
         super();
-        this.setup();
         this.setState();
-      }
-
-      setup() {
-        const $wrapper = document.querySelector('.card-wrapper');
-        const { setState } = this;
-        $wrapper.addEventListener('pointerdown', setState.bind(this));
       }
 
       appendLeftNode(responseArr) {
@@ -46,13 +39,16 @@
 
         for (let i = 0; i < 5; i += 1) {
           const newCard = this.pop().node;
+          console.log(newCard, this.length);
           wrapper.insertBefore(newCard, wrapper.firstElementChild);
         }
+        this.setState();
       }
 
       setState() {
         /* 서버가 벙렬 처리를 지원하지 않는다. */
         const url = 'https://api.thecatapi.com/v1/images/search';
+
         if (this.length > 5) return;
         const appendLeftNode = this.appendLeftNode.bind(this);
         const render = this.render.bind(this);
