@@ -57,15 +57,9 @@ body {
   }
 }
 
-.card-wrapper :nth-child(5) {
-  background: url('https://cdn2.thecatapi.com/images/aci.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
 .info-wrapper {
   position: absolute;
-  background: transparent; /* Inherit the background from the parent */
+  background: transparent;
   width: 100%;
   height: 20%;
   bottom: 0%;
@@ -80,4 +74,20 @@ body {
 
 .info-wrapper .person-greet {
   font-size: 1rem;
+}
+
+.first {
+  background: radial-gradient(circle, #f25e86, #df2758);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+}
+
+.first img {
+  width: 50%;
+  border-radius: 30%;
+  background-color: white;
+  user-select: none;
+  pointer-events: none;
 }
