@@ -1,7 +1,6 @@
 class Cards {
   constructor() {
     this.wrapper = document.querySelector('.card-wrapper');
-    this.halfArea = this.wrapper.clientWidth / 2;
     this.setup();
   }
 
@@ -19,7 +18,7 @@ class Cards {
 
       const cardMove = (event) => {
         this.moveCoord = { moveX: event.clientX, moveY: event.clientY };
-        const { halfArea } = this;
+        const { cardWidth } = this;
         const { moveX, moveY } = this.moveCoord;
         const { initX, initY } = this.initialCoord;
         this.offset = { offsetX: moveX - initX, offsetY: moveY - initY };
@@ -27,7 +26,7 @@ class Cards {
 
         const likeShadow = offsetX > 0 ? '#a81d3e' : '#aaa';
         const alpha = 5;
-        const likeRot = (offsetX / halfArea) * alpha;
+        const likeRot = (offsetX / cardWidth) * alpha;
 
         current.style.transform = `translate3D(${offsetX}px ,${offsetY}px , 10px)
         rotate(${likeRot}deg)`;
@@ -36,14 +35,25 @@ class Cards {
 
       const cardLeave = () => {
         const { cardWidth } = this;
-        const { offsetX } = this.offset;
+        const { offsetX, offsetY } = this.offset;
         const delay = 1000;
+
         if (Math.abs(offsetX) < cardWidth) {
+          current.style.transition = `all ${delay}ms`;
           setTimeout(() => {
             current.style.transition = 'all 0s';
           }, delay * 0.9);
-          current.style.transition = `all ${delay}ms`;
+
           current.style.transform = 'translate3D(0px,0px,0px)';
+        } else {
+          console.log('event!');
+          current.style.transition = `all ${delay}ms`;
+          setTimeout(() => {
+            current.style.transition = 'all 0s';
+          }, delay * 0.9);
+          current.style.transform = `translate3D(${offsetX * 5}px,${
+            offsetY * 5
+          }px,0px)`;
         }
 
         current.removeEventListener('pointerup', cardLeave);
