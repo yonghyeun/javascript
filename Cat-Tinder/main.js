@@ -6,40 +6,36 @@ class Cards {
 
   setup() {
     this.current = this.wrapper.lastElementChild;
-    this.initialCoord = { initX: 0, initY: 0 };
-    this.moveCoord = { moveX: 0, moveY: 0 };
-    this.offset = { X: 0, Y: 0 };
-
     if (!this.cardWidth) this.cardWidth = this.current.clientWidth;
+    this.initialCoord = { initX: 0, initY: 0 };
+    this.offset = { X: 0, Y: 0 };
 
     const cardSetup = (event) => {
       const { current } = this;
       this.initialCoord = { initX: event.clientX, initY: event.clientY };
 
       const cardMove = (event) => {
-        this.moveCoord = { moveX: event.clientX, moveY: event.clientY };
-        const { cardWidth } = this;
-        const { moveX, moveY } = this.moveCoord;
         const { initX, initY } = this.initialCoord;
-        this.offset = { offsetX: moveX - initX, offsetY: moveY - initY };
-        const { offsetX, offsetY } = this.offset;
-        console.log(initX, moveX, offsetX);
+        this.offset = {
+          X: event.clientX - initX,
+          Y: event.clientY - initY,
+        };
+        const { offset, cardWidth } = this;
 
-        const likeShadow = offsetX > 0 ? '#a81d3e' : '#aaa';
+        const likeShadow = offset.X > 0 ? '#a81d3e' : '#aaa';
         const alpha = 5;
-        const likeRot = (offsetX / cardWidth) * alpha;
+        const likeRot = (offset.X / cardWidth) * alpha;
 
-        current.style.transform = `translate3D(${offsetX}px ,${offsetY}px , 10px)
+        current.style.transform = `translate3D(${offset.X}px ,${offset.Y}px , 10px)
         rotate(${likeRot}deg)`;
         current.style.boxShadow = `0px 0px 50px 50px ${likeShadow};`;
       };
 
       const cardLeave = () => {
-        const { cardWidth } = this;
-        const { offsetX, offsetY } = this.offset;
+        const { cardWidth, offset } = this;
         const delay = 1000;
 
-        if (Math.abs(offsetX) < cardWidth) {
+        if (Math.abs(offset.X) < cardWidth) {
           current.style.transition = `all ${delay}ms`;
           setTimeout(() => {
             current.style.transition = 'all 0s';
@@ -51,9 +47,11 @@ class Cards {
           current.style.transition = `all ${delay}ms`;
           setTimeout(() => {
             current.style.transition = 'all 0s';
-          }, delay * 0.9);
-          current.style.transform = `translate3D(${offsetX * 5}px,${
-            offsetY * 5
+            this.wrapper.removeChild(current);
+            this.setup();
+          }, delay * 0.5);
+          current.style.transform = `translate3D(${offset.X * 5}px,${
+            offset.Y * 5
           }px,0px)`;
         }
 
