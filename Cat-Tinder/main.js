@@ -23,6 +23,7 @@ class Cards {
         const { initX, initY } = this.initialCoord;
         this.offset = { offsetX: moveX - initX, offsetY: moveY - initY };
         const { offsetX, offsetY } = this.offset;
+        console.log(initX, moveX, offsetX);
 
         const likeShadow = offsetX > 0 ? '#a81d3e' : '#aaa';
         const alpha = 5;
