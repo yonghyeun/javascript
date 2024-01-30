@@ -82,7 +82,7 @@ export default class Cards {
   terminateEvent = () => {
     const { offset, cardWidth, clearAllEvent } = this;
 
-    if (Math.abs(offset.X) > cardWidth) this.chooseCard();
+    if (Math.abs(offset.X) > cardWidth / 2) this.chooseCard();
     else this.initializeCard();
     clearAllEvent();
   };
