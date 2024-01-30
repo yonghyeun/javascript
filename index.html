@@ -3,68 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cat-tinder</title>
-    <link rel="stylesheet" href="./Cat-Tinder/style.css" />
+    <title>Document</title>
   </head>
   <body>
-    <div class="container">
-      <div class="card-wrapper">
-        <div class="card first">
-          <img src="./Cat-Tinder/src/heart.svg" alt="heart" />
-        </div>
-      </div>
-    </div>
-    <div class="button-wrapper">
-      <button class="dislike">🙀</button>
-      <button class="like">😻</button>
-    </div>
+    <script>
+      const keys = [...Array(1000000)].map((_, idx) => [idx, idx]);
+      const obj = Object.fromEntries(keys);
+      const map = new Map(keys);
+
+      let startTime = new Date();
+      for (let i = 0; i < 1000000; i++) {
+        obj[i] = i;
+      }
+      let endTime = new Date();
+      console.log(`Object add: ${endTime - startTime}ms`);
+
+      startTime = new Date();
+      for (let i = 0; i < 1000000; i++) {
+        map.set(i, i);
+      }
+      endTime = new Date();
+      console.log(`Map add: ${endTime - startTime}ms`);
+
+      startTime = new Date();
+      for (let i = 0; i < 1000000; i++) {
+        obj[i];
+      }
+      endTime = new Date();
+      console.log(`Object get: ${endTime - startTime}ms`);
+
+      startTime = new Date();
+      for (let i = 0; i < 1000000; i++) {
+        map.get(i);
+      }
+      endTime = new Date();
+      console.log(`Map get: ${endTime - startTime}ms`);
+
+      startTime = new Date();
+      for (let i = 0; i < 1000000; i++) {
+        delete obj[i];
+      }
+      endTime = new Date();
+      console.log(`Object delete: ${endTime - startTime}ms`);
+
+      startTime = new Date();
+      for (let i = 0; i < 1000000; i++) {
+        map.delete(i);
+      }
+      endTime = new Date();
+      console.log(`Map delete: ${endTime - startTime}ms`);
+    </script>
   </body>
-  <script type="module">
-    import deque from './Cat-Tinder/src/deque.js';
-    import InfoNode from './Cat-Tinder/src/InfoNode.js';
-
-    export default class APIdeque extends deque {
-      constructor() {
-        super();
-        this.setState();
-      }
-
-      appendLeftNode(responseArr) {
-        const bindedAppendLeft = this.appendLeft.bind(this);
-        responseArr.forEach((res) => bindedAppendLeft(new InfoNode(res)));
-      }
-
-      render() {
-        const wrapper = document.querySelector('.card-wrapper');
-
-        for (let i = 0; i < 5; i += 1) {
-          const newCard = this.pop().node;
-          console.log(newCard, this.length);
-          wrapper.insertBefore(newCard, wrapper.firstElementChild);
-        }
-        this.setState();
-      }
-
-      setState() {
-        /* 서버가 벙렬 처리를 지원하지 않는다. */
-        const url = 'https://api.thecatapi.com/v1/images/search';
-
-        if (this.length > 5) return;
-        const appendLeftNode = this.appendLeftNode.bind(this);
-        const render = this.render.bind(this);
-        const urlArr = Array.from({ length: 6 }, (_, index) => url);
-        const allPromises = Promise.all(
-          urlArr.map((url) => fetch(url).then((res) => res.json())),
-        )
-          .then((responseArr) => {
-            return responseArr.map((item) => new InfoNode(item[0]));
-          })
-          .then(appendLeftNode)
-          .then(render);
-      }
-    }
-
-    new APIdeque();
-  </script>
-  <script src="/Cat-Tinder/main.js" type="module"></script>
 </html>

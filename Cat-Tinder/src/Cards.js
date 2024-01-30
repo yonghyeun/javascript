@@ -1,4 +1,5 @@
 import APIdeque from './APIdeque.js';
+
 export default class Cards {
   constructor() {
     this.wrapper = document.querySelector('.card-wrapper');
@@ -44,8 +45,9 @@ export default class Cards {
       offset.Y * 5
     }px , 0px)`;
 
-    /* 카드가 선택되면 카드를 더 가져와야 하는지 확인 */
     this.count -= 1;
+
+    /* 카드가 선택되면 카드를 더 가져와야 하는지 확인 */
     if (this.count < 5) {
       this.deque.fetchImg();
       this.count += 5;
@@ -101,7 +103,6 @@ export default class Cards {
     this.current = this.wrapper.lastElementChild;
     this.initialCoord = { X: 0, Y: 0 };
     this.offset = { X: 0, Y: 0 };
-
     const { setupCard } = this;
 
     this.current.addEventListener('pointerdown', setupCard);

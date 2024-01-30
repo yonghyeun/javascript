@@ -1,4 +1,5 @@
-const obj = { firstName: 'lee', lastName: 'dongdong' };
-const obj2 = { age: 16, address: 'korea' };
-
-const [{ firstName, lastName }, { age, address }] = [obj, obj2];
+const keyObj = { a: 1 };
+const valueObj = { b: 2 };
+const map = new Map();
+map.set(keyObj, valueObj);
+console.log(map);
