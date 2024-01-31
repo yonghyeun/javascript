@@ -4,54 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      div {
+        width: 100px;
+        height: 100px;
+        background-color: black;
+      }
+    </style>
   </head>
   <body>
-    <script>
-      const keys = [...Array(1000000)].map((_, idx) => [idx, idx]);
-      const obj = Object.fromEntries(keys);
-      const map = new Map(keys);
-
-      let startTime = new Date();
-      for (let i = 0; i < 1000000; i++) {
-        obj[i] = i;
-      }
-      let endTime = new Date();
-      console.log(`Object add: ${endTime - startTime}ms`);
-
-      startTime = new Date();
-      for (let i = 0; i < 1000000; i++) {
-        map.set(i, i);
-      }
-      endTime = new Date();
-      console.log(`Map add: ${endTime - startTime}ms`);
-
-      startTime = new Date();
-      for (let i = 0; i < 1000000; i++) {
-        obj[i];
-      }
-      endTime = new Date();
-      console.log(`Object get: ${endTime - startTime}ms`);
-
-      startTime = new Date();
-      for (let i = 0; i < 1000000; i++) {
-        map.get(i);
-      }
-      endTime = new Date();
-      console.log(`Map get: ${endTime - startTime}ms`);
-
-      startTime = new Date();
-      for (let i = 0; i < 1000000; i++) {
-        delete obj[i];
-      }
-      endTime = new Date();
-      console.log(`Object delete: ${endTime - startTime}ms`);
-
-      startTime = new Date();
-      for (let i = 0; i < 1000000; i++) {
-        map.delete(i);
-      }
-      endTime = new Date();
-      console.log(`Map delete: ${endTime - startTime}ms`);
-    </script>
+    <div></div>
   </body>
 </html>
