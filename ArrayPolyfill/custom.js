@@ -102,3 +102,39 @@ Array.prototype.copyWithinCustom = function (target, start, end = this.length) {
 //   Array.prototype.copyWithinCustom,
 //   [60, 30, 3],
 // );
+
+/*
+Array.prototype.entries()
+Array 인스턴스의 entries() 메서드는 배열의 각 인덱스에 대한 키/값 쌍을 포함하는 새 배열 반복자 (en-US) 객체를 반환합니다.
+
+entries()
+*/
+
+Array.prototype.entriesCustom = function () {
+  let idx = 0;
+  const length = this.length;
+  const data = this;
+
+  const iterator = {
+    next() {
+      return {
+        value: idx < length ? [idx, data[idx]] : undefined,
+        done: idx++ < length ? false : true,
+      };
+    },
+    [Symbol.iterator]() {
+      return this;
+    },
+    [Symbol.toStringTag]: 'My custom entries',
+  };
+  return iterator;
+};
+
+/*
+Array.prototype.every()
+Array 인스턴스의 every() 메서드는 배열의 모든 요소가 제공된 함수로 구현된 테스트를 통과하는지 테스트합니다. 
+이 메서드는 불리언 값을 반환합니다.
+
+every(callbackFn)
+every(callbackFn, thisArg)
+*/
