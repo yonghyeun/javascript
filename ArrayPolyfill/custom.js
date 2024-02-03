@@ -335,5 +335,79 @@ Array 인스턴스의 flat() 메서드는 모든 하위 배열 요소가
 
 flat()
 flat(depth = 1)
-
 */
+
+Array.prototype.flatCustom = function (depth = 1) {
+  if (!depth) return this;
+  const { length } = this;
+  const result = [];
+
+  const recursionFunc = (elem, depth) => {
+    /* 
+    recursionFunc은 상위 렉시컬 환경의 depth 를 참조하는 클로저 함수 
+    depth가 0이거나 배열이 아닌 경우 result 추가 후 종료 */
+    if (!depth || !elem.length) {
+      result.push(elem);
+      return;
+    }
+
+    /* 
+    인수로 넘겨 받은 elem 이 배열일 경우 elem 을 순회하며 recursionFunc 재귀호출
+    재귀호출 시 depth 를 1 감소 시킨 후 호출하도록 함 
+    */
+    const { length } = elem;
+    depth -= 1;
+    for (let index = 0; index < length; index += 1) {
+      if (!elem[index]) continue; /* 평탄화 작업 중엔 희소값은 무시하도록 함 */
+      recursionFunc(elem[index], depth);
+    }
+  };
+
+  for (let index = 0; index < length; index += 1) {
+    const elem = this[index];
+    if (!elem) continue; /* 희소배열 경우엔 무시하도록 함 */
+    recursionFunc(elem, depth);
+  }
+  return result;
+};
+
+/* test코드를 작성하자 */
+
+// const testCustomflat = (arr, maxNestedLevel) => {
+//   const { length } = arr;
+//   for (let nestLevel = 1; nestLevel < maxNestedLevel; nestLevel += 1) {
+//     const original = arr.flat(nestLevel);
+//     const custom = arr.flatCustom(nestLevel);
+
+//     for (let index = 0; index < length; index += 1) {
+//       if (original[index].toString() !== custom[index].toString()) {
+//         console.log('실패');
+//         return;
+//       }
+//     }
+
+//     console.log('통과');
+//   }
+// };
+
+// const testCases = [
+//   [[1, 2, [3, 4, [5, 6]], 7, [8, 9]], 3],
+//   [[1, [2, [3, [4, [5, [6, [7, [8, [9]]]]]]]]], 8],
+//   [[1, [2, [3, [4, [5, [6, [7, [8, [9]]]]]]]], 10], 8],
+//   [[1, 2, 3, 4, 5, 6, 7, 8, 9], 1],
+//   [[[1], [2], [3], [4], [5], [6], [7], [8], [9]], 9],
+//   [[1, [2, [3, [4, [5, [6, [7, [8, [9]]]]]]]], [10, [11, [12]]]], 11],
+//   [
+//     [
+//       [1, 2, 3],
+//       [4, 5, 6],
+//       [7, 8, 9],
+//     ],
+//     3,
+//   ],
+//   [[1, [2, [3, [4, [5, [6, [7, [8, [9]]]]]]]], 10, [11, [12, [13, [14]]]]], 12],
+// ];
+
+// testCases.forEach((testcase) => {
+//   testCustomflat(...testcase);
+// });
