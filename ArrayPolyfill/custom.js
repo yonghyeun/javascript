@@ -141,8 +141,8 @@ every(callbackFn, thisArg)
 
 Array.prototype.everyCustom = function (callbackFn, thisArg = this) {
   for (let index = 0; index < this.length; index += 1) {
-    if (!this[index]) continue;
-    if (!callbackFn(this[index], index, thisArg)) return false;
+    if (!index in thisArg) continue;
+    if (!callbackFn(thisArg[index], index, thisArg)) return false;
   }
   return true;
 };
@@ -358,8 +358,7 @@ Array.prototype.flatCustom = function (depth = 1) {
     const { length } = elem;
     depth -= 1;
     for (let index = 0; index < length; index += 1) {
-      if (!elem[index]) continue; /* 평탄화 작업 중엔 희소값은 무시하도록 함 */
-      recursionFunc(elem[index], depth);
+      if (index in elem) recursionFunc(elem[index], depth);
     }
   };
 
@@ -411,3 +410,102 @@ Array.prototype.flatCustom = function (depth = 1) {
 // testCases.forEach((testcase) => {
 //   testCustomflat(...testcase);
 // });
+
+Array.prototype.flatMapCustom = function (callbackFn, thisArg = this) {
+  const { length } = this;
+  const result = [];
+
+  for (let index = 0; index < length; index += 1) {
+    const elem = thisArg[index];
+    if (index in thisArg) {
+      const subResult = callbackFn(elem, index, thisArg);
+      if (subResult.length) {
+        for (let subIndex = 0; subIndex < subResult.length; subIndex += 1) {
+          result.push(subResult[subIndex]);
+        }
+      } else {
+        result.push(subResult);
+      }
+    }
+  }
+  return result;
+};
+
+/*
+Array.prototype.forEach()
+Array 인스턴스의 forEach() 메서드는 각 배열 요소에 대해 제공된 함수를 한 번씩 실행합니다.
+
+forEach(callbackFn)
+forEach(callbackFn, thisArg)
+*/
+
+Array.prototype.forEachCustom = async function (callbackFn, thisArg = this) {
+  /* 비동기 함수들을 async/await 하는 커스텀 forEach */
+  const { length } = thisArg;
+
+  for (let index = 0; index < length; index += 1) {
+    const elem = await thisArg[index];
+    console.log(`이벤트 루프에서 ${elem}이 콜스택에 담겼어요`);
+
+    if (index in thisArg) callbackFn(elem, index, thisArg);
+  }
+  console.log('콜스택 종료');
+};
+
+// const asyncIterable = [
+//   new Promise((resolve) =>
+//     setTimeout(() => {
+//       resolve(1);
+//     }, 1000),
+//   ),
+//   new Promise((resolve) =>
+//     setTimeout(() => {
+//       resolve(2);
+//     }, 1000),
+//   ),
+//   new Promise((resolve) =>
+//     setTimeout(() => {
+//       resolve(3);
+//     }, 1000),
+//   ),
+// ];
+
+// const forofPromise = async (iterable) => {
+//   for await (const promise of iterable) {
+//     console.log(promise);
+//   }
+// };
+
+// forofPromise(asyncIterable);
+// asyncIterable.forEachCustom((promise) => console.log(promise));
+// console.log('forEach문은 이벤트 루프로 빠져나가서 제가 먼저 실행됩니다');
+
+/*
+Array.prototype.from
+
+Array.from() 정적 메서드는 순회 가능 또는 유사 배열 객체에서 
+얕게 복사된 새로운 Array 인스턴스를 생성합니다.
+
+Array.from(arrayLike, mapFn, thisArg)
+*/
+
+Array.fromCustom = function (arrayLike, mapFn, thisArg = arrayLike) {
+  const baseFunc = (num) => num;
+  mapFn = mapFn || baseFunc;
+  const result = [];
+
+  for (let index = 0; index < thisArg.length; index += 1) {
+    const elem = thisArg[index];
+    if (index in thisArg) {
+      result[index] = mapFn(thisArg[index], index);
+    } else {
+      result[index] = undefined;
+    }
+  }
+  return result;
+};
+
+const sparseArr = [1, 2, , 3, undefined, null, NaN];
+
+console.log(Array.from(sparseArr));
+console.log(Array.fromCustom(sparseArr));
