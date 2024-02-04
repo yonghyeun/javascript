@@ -497,7 +497,7 @@ Array.fromCustom = function (arrayLike, mapFn, thisArg = arrayLike) {
   for (let index = 0; index < thisArg.length; index += 1) {
     const elem = thisArg[index];
     if (index in thisArg) {
-      result[index] = mapFn(thisArg[index], index);
+      result[index] = mapFn(elem, index);
     } else {
       result[index] = undefined;
     }
@@ -505,7 +505,87 @@ Array.fromCustom = function (arrayLike, mapFn, thisArg = arrayLike) {
   return result;
 };
 
-const sparseArr = [1, 2, , 3, undefined, null, NaN];
+/*
+Array.prototype.includes
 
-console.log(Array.from(sparseArr));
-console.log(Array.fromCustom(sparseArr));
+Array 인스턴스의 includes() 메서드는 배열의 항목에 특정 값이 포함되어 있는지를
+판단하여 적절히 true 또는 false를 반환합니다.
+Same Value Zero 를 따른다
+
+includes(searchElement)
+includes(searchElement, fromIndex)
+*/
+
+Array.prototype.includesCustom = function (searchElement, fromIndex = 0) {
+  /* fromIndex 정수형 변환 */
+  if (fromIndex < -this.length) fromIndex = 0;
+  if (fromIndex >= this.length) return false;
+  fromIndex = fromIndex < 0 ? this.length + fromIndex : fromIndex;
+
+  for (let index = fromIndex; index < this.length; index += 1) {
+    const elem = this[index];
+    if (elem !== elem && searchElement !== searchElement) return true;
+    if (elem === searchElement) return true;
+  }
+  return false;
+};
+
+/*
+Array.prototype.indexOf()
+Array 인스턴스의 indexOf() 메서드는 배열에서 주어진 요소를 찾을 수 있는 첫 번째 인덱스를 반환하고, 찾을 수 없는 경우 -1을 반환합니다.
+
+indexOf(searchElement)
+indexOf(searchElement, fromIndex)
+*/
+
+Array.prototype.indexOfCustom = function (searchElement, fromIndex = 0) {
+  if (fromIndex < -this.length) fromIndex = 0;
+  if (fromIndex >= this.length) return false;
+  fromIndex = fromIndex < 0 ? this.length + fromIndex : fromIndex;
+
+  for (let index = fromIndex; index < this.length; index += 1) {
+    if (index in this && this[index] === searchElement) return index;
+  }
+  return -1;
+};
+
+/*
+Array.isArray()
+
+Array.isArray(value)
+*/
+
+Array.isArrayCustom = function isArray(value) {
+  try {
+    /* Array exotic object 인지 확인하자 */
+    if (typeof value !== 'object') return false;
+    /* 배열의 메소드지만 현재 커스텀하여 상속시킨 메소드가 많아 이것만 좀 양해 바람 */
+    const copiedValue = [...value];
+    const { length } = copiedValue;
+    const properties = Object.keys(copiedValue);
+    /* length 가 정수형이면서 2**32 미만인지 확인하기 */
+    if (!Number.isInteger(length) || length >= 2 ** 32) return false;
+    /* 객체의 length 와 프로퍼티 개수가 맞는지 확인하기  */
+    if (length !== properties.length) return false;
+    /* 인덱스 역할을 하는 프로퍼티들이 순차적인 정수형인지 확인하기 */
+    for (let index = 0; index < length; index += 1) {
+      /* Object.keys 는 문자형으로 생성되기 때문에 얕은 비교 사용 */
+      if (index != properties[index]) return false;
+    }
+    /* 
+    값이 추가되고 제거 될 때 length 프로퍼티 값이 변경되는지 확인하기
+    */
+    const originalLength = length;
+    copiedValue.push('temp value');
+    if (originalLength !== copiedValue.length - 1) return false;
+    copiedValue.pop();
+    if (originalLength !== copiedValue.length) return false;
+    /* 인덱스 역할을 하는 프로퍼티 키의 최대값이 2 ** 32 -1 미만인지 확인하기 */
+    copiedValue[2 ** 32 - 1] = 'temp value';
+
+    if (copiedValue.length !== originalLength) return false;
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
