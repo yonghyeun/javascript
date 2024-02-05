@@ -589,3 +589,323 @@ Array.isArrayCustom = function isArray(value) {
     return false;
   }
 };
+
+/*
+Array.prototype.join()
+Array 인스턴스의 Join() 메서드는 배열의 모든 요소를 쉼표나 지정된 구분 문자열로 구분하여 연결한 새 문자열을 만들어 반환합니다. 
+배열에 항목이 하나만 있는 경우, 해당 항목은 구분 기호를 사용하지 않고 반환됩니다.
+
+.join(seperator = '')
+*/
+
+Array.prototype.joinCustom = function (seperator = ',') {
+  const { length } = this;
+  if (!length) return '';
+
+  let result = '';
+  for (let index = 0; index < length; index += 1) {
+    let item = this[index];
+    item = item !== this ? item ?? '' : '';
+    result += item + (index < length - 1 ? seperator : '');
+  }
+  return result;
+};
+
+/*
+Array.prototype.keys()
+
+Array 인스턴스의 keys() 메서드는 배열의 각 인덱스에 대한 키를 포함하는 새로운 배열 반복자 (en-US) 객체를 반환합니다.
+*/
+
+Array.prototype.keysCustom = function () {
+  const { length } = this;
+  let cur = 0;
+  return {
+    [Symbol.toStringTag]: 'Array Iterator',
+    [Symbol.iterator]() {
+      return this;
+    },
+    next() {
+      return {
+        value: cur < length ? cur : undefined,
+        done: cur++ < length ? false : true,
+      };
+    },
+  };
+};
+
+/*
+Array.prototype.lastIndexOf
+Array 인스턴스의 lastIndexOf() 메서드는 배열에서 특정 요소를 찾을 수 있는 마지막 인덱스를 반환하거나, 
+해당 요소가 없으면 -1을 반환합니다. 배열은 fromIndex에서 시작하여 역방향으로 검색됩니다.
+
+lastIndexOf(searchElement)
+lastIndexOf(searchElement, fromIndex)
+*/
+
+Array.prototype.lastIndexOfCustom = function (
+  searchElement,
+  fromIndex = this.length - 1,
+) {
+  const { length } = this;
+  fromIndex = Math.floor(fromIndex); /* 정수 형변환 */
+
+  if (fromIndex < -length) return -1;
+  fromIndex = fromIndex < 0 ? length + fromIndex : fromIndex; /* 양수 형변환 */
+  /* length 보다 길 경우 length - 1 */
+  fromIndex = fromIndex > length ? length - 1 : fromIndex;
+
+  for (let index = fromIndex; index > 0; index -= 1) {
+    if (this[index] === searchElement) return index;
+  }
+  return -1;
+};
+
+/*
+Array.prototype.map()
+map() 메서드는 배열 내의 모든 요소 각각에 대하여 주어진 함수를 호출한 결과를 모아 새로운 배열을 반환합니다.
+
+arr.map(callback(currentValue[, index[, array]])[, thisArg])
+*/
+
+Array.prototype.mapCustom = function (callbackFn, thisArg = this) {
+  const { length } = this;
+
+  const resultArr = [];
+  for (let index = 0; index < length; index += 1) {
+    if (index in thisArg) {
+      const elem = thisArg[index];
+      resultArr[index] = callbackFn(elem, index, thisArg);
+    }
+  }
+  return resultArr;
+};
+/*
+Array.of()
+
+Array.of() 메서드는 인자의 수나 유형에 관계없이 가변 인자를 갖는 새 Array 인스턴스를 만듭니다.
+
+Array.of()와 Array 생성자의 차이는 정수형 인자의 처리 방법에 있습니다. 
+Array.of(7)은 하나의 요소 7을 가진 배열을 생성하지만 
+Array(7)은 length 속성이 7인 빈 배열을 생성합니다.
+*/
+
+Array.ofCustom = function () {
+  const resultArr = [];
+  for (let index = 0; index < arguments.length; index += 1) {
+    resultArr[index] = arguments[index];
+  }
+  return resultArr;
+};
+
+/*
+Array.prototype.pop
+Array.prototype.pop()
+pop() 메서드는 배열에서 마지막 요소를 제거하고 그 요소를 반환합니다.
+*/
+
+Array.prototype.popCustom = function () {
+  const { length } = this;
+  if (!length) return undefined;
+
+  const lastElement = this[length - 1];
+  this.length -= 1;
+  return lastElement;
+};
+
+/*
+Array.prototype.push()
+push() 메서드는 배열의 끝에 하나 이상의 요소를 추가하고, 배열의 새로운 길이를 반환합니다.
+
+arr.push(element1[, ...[, elementN]])
+*/
+
+Array.prototype.pushCustom = function () {
+  const { length: originalLength } = this;
+  for (let index = 0; index < arguments.length; index += 1) {
+    this[originalLength + index] = arguments[index];
+  }
+  return this.length;
+};
+
+/*
+Array.prototype.reduce()
+
+reduce() 메서드는 배열의 각 요소에 대해 주어진 리듀서 (reducer) 함수를 
+실행하고, 하나의 결과값을 반환합니다.
+
+arr.reduce(callback[, initialValue])
+*/
+
+Array.prototype.reduceCustom = function (callbackFn, initialValue) {
+  const { length } = this;
+  if (!length) return new Error('This array is empty!');
+  let index = initialValue === undefined ? 1 : 0;
+  let acc = initialValue === undefined ? this[0] : initialValue;
+
+  for (index; index < this.length; index += 1) {
+    if (index in this) {
+      const cur = this[index];
+      acc = callbackFn(acc, cur, index, this);
+    }
+  }
+  return acc;
+};
+
+/*
+Array.prototype.reduceRight()
+
+*/
+
+Array.prototype.reduceRightCustom = function (callbackFn, initialValue) {
+  const { length } = this;
+  if (!length) return new Error('This array is empty!');
+  let index = initialValue === undefined ? length - 2 : length - 1;
+  let acc = initialValue === undefined ? this[length - 1] : initialValue;
+
+  for (index; index > -1; index -= 1) {
+    if (index in this) {
+      const cur = this[index];
+      acc = callbackFn(acc, cur, index, this);
+    }
+  }
+  return acc;
+};
+
+/*
+Array.prototype.reverse
+
+reverse() 메서드는 배열의 순서를 반전합니다.
+첫 번째 요소는 마지막 요소가 되며 마지막 요소는 첫 번째 요소가 됩니다.
+*/
+
+Array.prototype.reverseCustom = function () {
+  const { length } = this;
+  let firstIndex = 0;
+  for (firstIndex; firstIndex < Math.floor(length / 2); firstIndex += 1) {
+    const lastIndex = length - 1 - firstIndex;
+    /* 희소값인 경우 기억하자 */
+    const isEmpty = !(firstIndex in this && lastIndex in this);
+    const emptyIndex = firstIndex in this ? firstIndex : lastIndex;
+
+    [this[firstIndex], this[lastIndex]] = [this[lastIndex], this[firstIndex]];
+
+    if (isEmpty) {
+      delete this[emptyIndex];
+    }
+  }
+  return this;
+};
+
+/*
+Array.prototype.shift
+
+shift() 메서드는 배열에서 첫 번째 요소를 제거하고, 제거된 요소를 반환합니다. 이 메서드는 배열의 길이를 변하게 합니다.
+*/
+
+Array.prototype.shiftCustom = function () {
+  const { length } = this;
+  if (!length) return undefined;
+  const firstValue = this[0];
+  for (let index = 1; index < length; index += 1) {
+    this[index - 1] = this[index];
+    if (!(index in this)) {
+      /* 이동시킨 값이 희소값이라면 제거하여 희소배열 형태 유지하기 */
+      delete this[index - 1];
+    }
+  }
+  this.length -= 1;
+  return firstValue;
+};
+
+/*
+Array.prototype.slice
+
+slice() 메서드는 어떤 배열의 begin 부터 end 까지(end 미포함)에 대한 얕은 복사본을 새로운 배열 객체로 반환합니다. 
+원본 배열은 바뀌지 않습니다.
+*/
+
+Array.prototype.sliceCustom = function (begin = 0, end = this.length) {
+  const { length } = this;
+  /* 정수 형변환 */
+  [begin, end] = [Math.floor(begin), Math.floor(end)];
+  /* 양수 형변환 */
+  begin = begin < 0 ? length + begin : begin;
+  end = end < 0 ? length + end : end;
+
+  if (begin > length) return [];
+  const resultArr = [];
+
+  for (let index = 0; index < end - begin; index += 1) {
+    resultArr[index] = this[index + begin];
+    if (!(index + begin in this)) {
+      delete resultArr[index];
+    }
+  }
+  return resultArr;
+};
+
+/*
+Array.prototype.some 
+
+some() 메서드는 배열 안의 어떤 요소라도 주어진 판별 함수를
+적어도 하나라도 통과하는지 테스트합니다. 
+만약 배열에서 주어진 함수가 true을 반환하면 true를 반환합니다.
+그렇지 않으면 false를 반환합니다. 이 메서드는 배열을 변경하지 않습니다.
+*/
+
+Array.prototype.someCustom = function (callbackFn, thisArg = this) {
+  const { length } = thisArg;
+  if (!length) return false;
+  for (let index = 0; index < length; index += 1) {
+    if (index in thisArg) {
+      if (callbackFn(thisArg[index], index, thisArg)) return true;
+    }
+  }
+  return false;
+};
+
+/*
+Array.prototype.sort()
+sort() 메서드는 배열의 요소를 적절한 위치에 정렬한 후 그 배열을 반환합니다. 
+정렬은 stable sort가 아닐 수 있습니다. 기본 정렬 순서는 문자열의 유니코드 코드 포인트를 따릅니다.
+
+정렬 속도와 복잡도는 각 구현방식에 따라 다를 수 있습니다.
+*/
+
+Array.prototype.sortCustom = function (callbackFn) {
+  const arr = callbackFn ? this : this.map((num) => num.toString());
+
+  callbackFn = callbackFn || ((a, b) => a.localeCompare(b));
+
+  const recursion = (array, start, end) => {
+    for (let index = start; index < end; index += 1) {
+      const result = callbackFn(array[index], array[index + 1]);
+      if (result <= 0) continue;
+      [array[index], array[index + 1]] = [array[index + 1], array[index]];
+      [this[index], this[index + 1]] = [this[index + 1], this[index]];
+      recursion(array, start, index);
+    }
+  };
+  recursion(arr, 0, this.length - 1);
+  return this;
+};
+
+const createRandomArray = () => {
+  return Array.from({ length: 1000 }, () =>
+    Math.floor(Math.random() * (1000 + 1 - 0)),
+  );
+};
+
+const arr1 = createRandomArray();
+const arr2 = [...arr1];
+arr1.sort();
+arr2.sortCustom();
+
+console.log(arr1.every((num, index) => num === arr2[index]));
+
+const arr3 = createRandomArray();
+const arr4 = [...arr3];
+arr3.sort((a, b) => b - a);
+arr4.sort((a, b) => b - a);
+console.log(arr3.every((num, index) => num === arr4[index]));
