@@ -1002,3 +1002,69 @@ Array.prototype.spliceCustom = function (start, deleteCount, ...items) {
 // };
 
 // testCustomSplice();
+
+/*
+Array.prototype.unshift()
+unshift() 메서드는 새로운 요소를 배열의 맨 앞쪽에 추가하고, 새로운 길이를 반환합니다.
+
+arr.unshift([...elementN]);
+ */
+
+Array.prototype.unshiftCustom = function (...elementN) {
+  if (!elementN) return this.length;
+  const offset = elementN.length;
+  const { length } = this;
+  for (let index = 0; index < length; index += 1) {
+    this[index + offset] = this[index];
+  }
+  for (let index = 0; index < offset; index += 1) {
+    this[index] = elementN[index];
+  }
+  return this.length;
+};
+
+/*
+Array.prototype.values()
+values() 메서드는 배열에서 각 인덱스에 대한 값을 순회하는 array iterator 객체를 반환합니다.
+
+values()
+Array.prototype.values === Array.prototype[Symbol.iterator]; // true
+*/
+
+Array.prototype.valuesCustom = function () {
+  const { length } = this;
+  let index = 0;
+  return {
+    [Symbol.iterator]() {
+      return this;
+    },
+
+    next: () => {
+      return {
+        value: index < length ? this[index] : undefined,
+        done: index++ < length ? false : true,
+      };
+    },
+  };
+};
+
+/*
+Array.prototype.with()
+Array 인스턴스의 with() 메서드는 주어진 인덱스의 값을 변경하기 위해 대괄호 표기법을 사용하는 것의 복사 버전입니다. 
+이 함수는 지정된 인덱스의 요소가 지정된 값으로 대체된 새 배열을 반환합니다.
+
+array.with(index, value)
+*/
+
+Array.prototype.withCustom = function (index, value) {
+  index = Math.floor(index);
+  index = index < 0 ? this.length + index : index;
+  if (index >= this.length) throw new RangeError(`${index} 는 안돼 ~! `);
+  const resultArr = [];
+
+  for (let idx = 0; idx < this.length; idx += 1) {
+    if (idx === index) resultArr[idx] = value;
+    else resultArr[idx] = this[idx];
+  }
+  return resultArr;
+};
