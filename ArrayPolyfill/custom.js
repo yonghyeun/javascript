@@ -202,9 +202,9 @@ Array.prototype.fillCustom = function (value, start = 0, end = this.length) {
 
 const testCustomfill = (array, testNum = 100000) => {
   /* test에 사용할 array 의 길이는 100 */
-  let trial = 0;
+  let linear = 0;
   let value, start, end;
-  while (trial < testNum) {
+  while (linear < testNum) {
     let arr1 = [...array];
     let arr2 = [...array];
 
@@ -221,7 +221,7 @@ const testCustomfill = (array, testNum = 100000) => {
     for (let index = 0; index < arr1.length; index += 1) {
       if (arr1[index] !== arr2[index]) return '실패';
     }
-    trial += 1;
+    linear += 1;
   }
   return '통과';
 };
@@ -874,38 +874,131 @@ sort() 메서드는 배열의 요소를 적절한 위치에 정렬한 후 그 �
 */
 
 Array.prototype.sortCustom = function (callbackFn) {
-  const arr = callbackFn ? this : this.map((num) => num.toString());
+  callbackFn =
+    callbackFn || ((a, b) => a.toString().localeCompare(b.toString()));
+  let trial = 0;
 
-  callbackFn = callbackFn || ((a, b) => a.localeCompare(b));
-
-  const recursion = (array, start, end) => {
+  const recursion = (start, end) => {
     for (let index = start; index < end; index += 1) {
-      const result = callbackFn(array[index], array[index + 1]);
-      if (result <= 0) continue;
-      [array[index], array[index + 1]] = [array[index + 1], array[index]];
+      if (callbackFn(this[index], this[index + 1]) <= 0) continue;
+
       [this[index], this[index + 1]] = [this[index + 1], this[index]];
-      recursion(array, start, index);
+      trial += end - 1;
+      if (start < end - 1) {
+        recursion(start, end - 1);
+      }
     }
   };
-  recursion(arr, 0, this.length - 1);
+  recursion(0, this.length - 1);
+  console.log(`전체 순회 횟수 : ${trial}`);
   return this;
 };
 
-const createRandomArray = () => {
-  return Array.from({ length: 1000 }, () =>
-    Math.floor(Math.random() * (1000 + 1 - 0)),
-  );
+// const createRandomArray = (maxLength) => {
+//   return Array.from({ length: maxLength }, () =>
+//     Math.floor(Math.random() * (maxLength + 1 - 0)),
+//   );
+// };
+
+// const arr = createRandomArray(10);
+// console.log(arr);
+// console.log(arr.sortCustom((a, b) => a - b));
+
+/*
+Array.prototype.splice()
+
+splice() 메서드는 배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경합니다.
+array.splice(start[, deleteCount[, item1[, item2[, ...]]]])
+*/
+
+Array.prototype.spliceCustom = function (start, deleteCount, ...items) {
+  const { length } = this;
+  const returnArr = [];
+
+  if (Math.abs(start) > length) {
+    start = start > 0 ? length : 0;
+  }
+  start = start > 0 ? start : length + start;
+
+  deleteCount = deleteCount || length - start;
+  deleteCount = deleteCount < 0 ? 0 : deleteCount;
+  deleteCount = Math.min(deleteCount, length - start);
+
+  const offset = Math.abs(items.length - deleteCount); // start 이후의 원소들이 이동해야 하는 거리
+
+  /** splice 시킬 배열들을 골라두기 */
+  for (let index = 0; index < deleteCount; index += 1) {
+    returnArr[index] = this[start + index];
+  }
+
+  /** items.length < deleteCount , items.length < deleteCount 경우에 따라 
+  기존 원소들의 인덱스 변경 방식 다르게
+  */
+  if (items.length < deleteCount) {
+    for (let index = start; index < length - deleteCount; index += 1) {
+      this[index] = this[index + deleteCount];
+    }
+  }
+
+  if (items.length > deleteCount) {
+    for (let index = length - 1; index >= start; index -= 1) {
+      this[index + offset] = this[index];
+    }
+  }
+  /** start부터 item 원소 설정해주기 */
+
+  for (let index = 0; index < items.length; index += 1) {
+    this[start + index] = items[index];
+  }
+
+  /* this.length를 변경하여 배열 설정해주기 */
+  if (deleteCount > items.length) this.length -= items.length - deleteCount;
+  return returnArr;
 };
 
-const arr1 = createRandomArray();
-const arr2 = [...arr1];
-arr1.sort();
-arr2.sortCustom();
+// const testCustomSplice = () => {
+//   const arr = [1, 2, 3, 4, 5];
+//   const testCases = [
+//     // Case 1: 0 < start < length, deleteCount = 2, items = [7, 8]
+//     [2, 2, 7, 8],
+//     // Case 2: start < 0 < length, deleteCount = 3, items = [7, 8]
+//     [-2, 3, 7, 8],
+//     // Case 3: 0 < start < deleteCount < length, deleteCount = 3, items = [7, 8]
+//     [1, 3, 7, 8],
+//     // Case 4: start < 0 < deleteCount < length, deleteCount = 3, items = [7, 8]
+//     [-2, 3, 7, 8],
+//     // Case 5: 0 < start < length < deleteCount, deleteCount = 6, items = [7, 8]
+//     [1, 6, 7, 8],
+//     // Case 6: 0 < length < start < deleteCount, deleteCount = 3, items = [7, 8]
+//     [6, 3, 7, 8],
+//     // Case 7: 0 < start < length < items.length, deleteCount = 2, items = [7, 8, 9]
+//     [2, 2, 7, 8, 9],
+//     // Case 8: 0 < start < items.length < length, deleteCount = 2, items = [7, 8]
+//     [2, 2, 7, 8],
+//     // Case 9: 0 < length < start < items.length, deleteCount = 2, items = [7, 8]
+//     [6, 2, 7, 8],
+//     // Case 10: start < 0 < length, deleteCount = 2, items = [7, 8]
+//     [-2, 2, 7, 8],
+//     // Case 11: 0 < start < deleteCount < length, deleteCount = 3, items = [7, 8]
+//     [1, 3, 7, 8],
+//   ];
 
-console.log(arr1.every((num, index) => num === arr2[index]));
+//   for (let index = 0; index < testCases.length; index += 1) {
+//     const arr1 = [...arr];
+//     const arr2 = [...arr];
+//     const testCase = testCases[index];
+//     const return1 = arr1.splice(...testCase);
+//     const return2 = arr2.splice(...testCase);
 
-const arr3 = createRandomArray();
-const arr4 = [...arr3];
-arr3.sort((a, b) => b - a);
-arr4.sort((a, b) => b - a);
-console.log(arr3.every((num, index) => num === arr4[index]));
+//     const arrResult = arr1.every((elem, idx) => elem === arr2[idx]);
+//     const returnResult = return1.every((elem, idx) => elem === return2[idx]);
+
+//     console.log(
+//       `testCase${index + 1} ${arrResult && returnResult ? '통과' : '실패'}`,
+//     );
+//     console.log(`정답 반환 값 : ${return1} 정답 배열 : ${arr1}`);
+//     console.log(`나의 반환 값 : ${return2} 나의 배열 : ${arr2}`);
+//   }
+// };
+
+// testCustomSplice();
