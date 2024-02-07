@@ -1,0 +1,12 @@
+.parent {
+  background: purple;
+  width: 500px;
+  height: 500px;
+}
+
+.child {
+  background-color: orange;
+  width: 300px;
+  height: 300px;
+  transition: all 3s;
+}

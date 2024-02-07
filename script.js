@@ -1,10 +1,9 @@
-const randomArray =
-  /* 
-Array.prototype.at 구현
-반환할 배열 요소의 0부터 시작하는 인덱스로, 정수로 변환됩니다. 
-음수 인덱스는 배열 끝부터 거슬러 셉니다. index < 0인 경우, index + array.length로 접근합니다.
-*/
-  (Array.prototype.atCustom = function (index) {
-    const indexInteger = ParseInt(index, 10);
-    return this[indexInteger < 0 ? this.length - indexInteger : indexInteger];
-  });
+const $child = document.querySelector('.child');
+
+// $child.style.backgroundColor = 'red';
+// $child.style.border = '2px solid white';
+// $child.style.boxShadow = '0px 0px 10px 10px white';
+// $child.style.borderRadius = '20px';
+
+$child.style.cssText =
+  'transtion : all 3s; background-color: red; border: 2px solid white; box-shadow: 0px 0px 10px 10px white; border-radius: 20px;';
