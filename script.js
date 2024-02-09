@@ -1,9 +1,19 @@
-const $child = document.querySelector('.child');
+let start, timeDiff;
+let startTime;
 
-// $child.style.backgroundColor = 'red';
-// $child.style.border = '2px solid white';
-// $child.style.boxShadow = '0px 0px 10px 10px white';
-// $child.style.borderRadius = '20px';
+const step = (timeStamp) => {
+  if (!start) {
+    start = timeStamp;
+    startTime = new Date();
+  }
+  timeDiff = timeStamp - start;
+  console.log(start, timeStamp, timeDiff);
 
-$child.style.cssText =
-  'transtion : all 3s; background-color: red; border: 2px solid white; box-shadow: 0px 0px 10px 10px white; border-radius: 20px;';
+  if (timeDiff > 5000) {
+    const endTime = new Date();
+    window.cancelAnimationFrame(step);
+    console.log(endTime - startTime);
+  } else window.requestAnimationFrame(step);
+};
+
+window.requestAnimationFrame(step);
