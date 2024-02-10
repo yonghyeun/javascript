@@ -1,83 +1,114 @@
-const $button = document.querySelector('button');
-const $interval = document.querySelector('.interval');
-const $animation = document.querySelector('.animation');
-const $body = document.querySelector('body');
+class Recorder {
+  constructor(startTime) {
+    this.startTime = startTime;
+    this.intervalList = [];
+    this.timeList = [];
+  }
 
-const maxWidth = $body.clientWidth;
-let intervalWidth = $interval.clientWidth;
-let animationWidth = $animation.clientWidth;
-const settingInterval = () => {
-  const result = {
-    startTime: new Date().getTime(),
-  };
-  const intervalList = [];
-  const timeList = [];
-  let curTime;
-  let lastTime;
+  setTimeline(curTime, lastTime) {
+    const { startTime, intervalList, timeList } = this;
+    intervalList.push(curTime - lastTime); // 이전 호출과의 간격
+    timeList.push(curTime - startTime); // 시작부터의 간격 , 선형적일 수록 타임라인이 일정한 호출
+  }
 
-  const intervalFunc = setInterval(() => {
-    const { startTime } = result;
-    if (intervalWidth >= maxWidth) {
-      result.averageInterval =
-        intervalList.reduce((pre, cur) => pre + cur) / intervalList.length;
-      result.maxInterval = Math.max(...intervalList.slice(1));
-      result.minInterval = Math.min(...intervalList.slice(1));
-      console.log('setInterval의 결과 테이블');
-      console.table(result);
+  generateResult(curTime) {
+    const { startTime, intervalList } = this;
+    const { length } = intervalList;
 
-      clearInterval(intervalFunc);
-    }
+    const totalInterval = intervalList.reduce((pre, cur) => pre + cur);
 
-    curTime = new Date().getTime();
-    if (!lastTime) lastTime = curTime;
+    this.result = {
+      maxInterval: Math.max(...intervalList.slice(1)),
+      minInterval: Math.min(...intervalList.slice(1)),
+      avrageInterval: totalInterval / length,
+      elapseTime: curTime - startTime,
+      averageFrame: Math.round(1000 / (totalInterval / length)),
+    };
+    return this.result;
+  }
+}
 
-    intervalWidth += 1;
-    $interval.style.width = `${intervalWidth}px`;
+const repaintNode = (nodeInfo) => {
+  const needStop = nodeInfo.size >= nodeInfo.maxWidth;
+  nodeInfo.node.style.width = `${nodeInfo.size}px`;
+  nodeInfo.size += 1;
 
-    intervalList.push(curTime - lastTime);
-
-    timeList.push(curTime - startTime);
-    lastTime = curTime;
-  }, 1000 / 60);
+  return needStop;
 };
 
-const settingRequestAnimation = () => {
-  const intervalList = [];
-  const timeList = [];
-  const result = {
-    startTime: undefined,
+const setIntervalFunc = (nodeInfo) => {
+  const DELAY = 1000 / 60;
+  const startTime = new Date().getTime();
+  const params = {
+    startTime,
+    lastTime: startTime,
+    recorder: new Recorder(startTime),
   };
-  let curTime;
-  let lastTime;
-  const animationFunc = (timeStamp) => {
-    if (animationWidth >= maxWidth) {
-      result.averageInterval =
-        intervalList.reduce((pre, cur) => pre + cur) / intervalList.length;
-      result.maxInterval = Math.max(...intervalList.slice(1));
-      result.minInterval = Math.min(...intervalList.slice(1));
-      console.log('requestAnimaionFrame의 결과 테이블');
+
+  const timer = setInterval(() => {
+    const { recorder, lastTime } = params;
+    const curTime = new Date().getTime();
+
+    recorder.setTimeline(curTime, lastTime); // 타임라인 기록
+    const needStop = repaintNode(nodeInfo);
+    if (needStop) {
+      const result = recorder.generateResult(curTime);
+      console.log('setInterval 의 애니메이션 테이블');
+      console.table(result);
+
+      clearInterval(timer);
+    }
+
+    params.lastTime = curTime;
+  }, DELAY);
+};
+
+const setAnimationFunc = (nodeInfo) => {
+  const startTime = new Date().getTime();
+  const params = {
+    startTime,
+    lastTime: startTime,
+    recorder: new Recorder(startTime),
+  };
+
+  const callbackFn = (timeStamp) => {
+    const { recorder, lastTime } = params;
+    const curTime = startTime + timeStamp;
+
+    recorder.setTimeline(curTime, lastTime);
+    const needStop = repaintNode(nodeInfo);
+    if (needStop) {
+      const result = recorder.generateResult(curTime);
+      console.log('requestAnimation 의 애니메이션 테이블');
       console.table(result);
 
       return;
     }
-
-    if (!result.startTime) result.startTime = timeStamp;
-    curTime = timeStamp;
-    if (!lastTime) lastTime = curTime;
-
-    animationWidth += 1;
-    $animation.style.width = `${animationWidth}px`;
-
-    intervalList.push(curTime - lastTime);
-    timeList.push(curTime);
-    lastTime = curTime;
-    requestAnimationFrame(animationFunc);
+    params.lastTime = curTime;
+    requestAnimationFrame(callbackFn);
   };
+  requestAnimationFrame(callbackFn);
+};
 
-  requestAnimationFrame(animationFunc);
+const $button = document.querySelector('button');
+const $interval = document.querySelector('.interval');
+const $animation = document.querySelector('.animation');
+const $body = document.querySelector('body');
+const maxWidth = $body.clientWidth;
+
+const intervalInfo = {
+  size: $interval.clientWidth,
+  node: $interval,
+  maxWidth,
+};
+
+const animationInfo = {
+  size: $animation.clientWidth,
+  node: $animation,
+  maxWidth,
 };
 
 $button.addEventListener('click', () => {
-  settingInterval();
-  settingRequestAnimation();
+  setIntervalFunc(intervalInfo);
+  setAnimationFunc(animationInfo);
 });
