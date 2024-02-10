@@ -1,0 +1,29 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+div {
+  padding: 10px;
+}
+
+.interval,
+.animation {
+  display: flex;
+  justify-content: flex-end;
+  color: white;
+  font-weight: 900;
+  width: 200px;
+  margin: 10px;
+}
+
+.interval {
+  background-color: orange;
+}
+.animation {
+  background-color: tomato;
+}
+
+button {
+  padding: 10px;
+}
