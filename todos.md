@@ -124,12 +124,19 @@ JS + React 과 같은 프로그래밍 언어공부를 먼저 중점으로 둬야
 2/10 ~ 2/11 todos
 [V] 브라우저 렌더링 파이프라인 공부
 => deep dive
-
 2/12
 [V] HTTP 공부
 [V] Reflow Test Cat 객체 생성하고 블로그 포스팅
 2/13
-[] Reflow Test UI 생성하기
-[] React 왜 배워야 하는지 이유 찾고 생각하기
-[] TypeScript => JSDOC..? 하지만 협업을 하기 위해서는 TS 를 배우긴 해야 한다
-[] HTTP 공부 마무리
+[V] Reflow Test UI 생성하기
+[V] TypeScript => JSDOC..? 하지만 협업을 하기 위해서는 TS 를 배우긴 해야 한다
+2/14
+[V] Reflow Test 마무리하기
+[V] Batch DOM Manipulation 공부하기
+[V] HTTP 공부 마무리
+[V] React 왜 배워야 하는지 이유 찾고 생각하기
+=> Virtual DOM & SPA
+
+2/15
+[V] 본격적 React 공부 시작
+=> 공식 문서 5일 안에 뿌시기 고고
